@@ -1,0 +1,43 @@
+//You have to search a word from the text and display how many times the word occurs in the text.
+//You will show the Frequency and the Location of that word. Write a paragraph of your own choice
+//in a notepad file and read the text from that file and apply your searching algorithm.\
+
+using System;
+using System.Security.Cryptography.X509Certificates;
+using System.Text.RegularExpressions;
+using System.Transactions;
+using System.Collections.Generic;
+namespace Assignment1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string path = @"./file.txt";
+            Console.WriteLine("Please enter your word");
+            string input = Console.ReadLine();
+            string text = File.ReadAllText(path);
+
+            (int frequency, List<int> loc) = SearchWord(text, input);
+            Console.WriteLine($"word '{input}'is occurs {frequency} times");
+            Console.WriteLine("location" + string.Join(", ", loc));
+
+
+        }
+        static (int frequency, List<int> loc) SearchWord(string text, string word) 
+        {
+            int frequncy = 0;
+            List<int> loc = new List<int>();
+            int index = text.IndexOf(word,0,StringComparison.OrdinalIgnoreCase);
+            while (index != -1)
+            {
+                frequncy++;
+                loc.Add(index);
+                index = text.IndexOf(word,index + word.Length,StringComparison.OrdinalIgnoreCase);
+
+            }
+            return (frequncy, loc);
+        }
+    }
+
+}
